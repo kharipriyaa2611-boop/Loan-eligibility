@@ -1,0 +1,72 @@
+
+import java.util.Scanner;
+
+public class LoanSystem {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        String name;
+        int age, duration, paid;
+        double income, loan, emi;
+        double rate = 10.0 / 12 / 100;
+
+        // Input
+        System.out.print("Enter Name: ");
+        name = sc.nextLine();
+
+        System.out.print("Enter Age: ");
+        age = sc.nextInt();
+
+        System.out.print("Enter Monthly Income: ");
+        income = sc.nextDouble();
+
+        System.out.print("Enter Loan Amount: ");
+        loan = sc.nextDouble();
+
+        System.out.print("Enter Loan Duration (months): ");
+        duration = sc.nextInt();
+
+        // Eligibility Check
+        if (income >= 25000 && age >= 21 && age <= 60
+                && loan > 0 && duration > 0) {
+
+            System.out.println("Eligible for Loan");
+
+            // EMI Calculation
+            emi = (loan * rate * Math.pow(1 + rate, duration))
+                    / (Math.pow(1 + rate, duration) - 1);
+
+            System.out.printf("Monthly EMI: Rs. %.2f%n", emi);
+
+            System.out.printf("Total Amount: Rs. %.2f%n",
+                    emi * duration);
+
+            System.out.printf("Total Interest: Rs. %.2f%n",
+                    (emi * duration) - loan);
+
+            // Payment Tracking
+            System.out.print("Enter number of EMIs paid: ");
+            paid = sc.nextInt();
+
+            if (paid >= 0 && paid <= duration) {
+                System.out.println("EMIs Paid: " + paid);
+                System.out.println(
+                        "Remaining EMIs: " + (duration - paid));
+
+                if (paid == duration) {
+                    System.out.println("Status: All EMIs Paid");
+                } else {
+                    System.out.println("Status: Payment Pending");
+                }
+            } else {
+                System.out.println("Invalid number of EMIs");
+            }
+
+        } else {
+            System.out.println("Not Eligible for Loan");
+        }
+
+        sc.close();
+    }
+}
